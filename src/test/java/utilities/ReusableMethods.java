@@ -1,14 +1,16 @@
 package utilities;
 
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,159 +19,189 @@ import java.util.List;
 import java.util.Set;
 
 public class ReusableMethods {
+    //========Returns the Text of the element given an element locator==//
+    public static List<String> getElementsText(By locator) {
+        List<WebElement> elems = Driver.getDriver().findElements(locator);
+        List<String> elemTexts = new ArrayList<>();
+        for (WebElement el : elems) {
+            if (!el.getText().isEmpty()) {
+                elemTexts.add(el.getText());
+            }
+        }
+        return elemTexts;
+    }
 
-    public static List<String> stringListeDonustur(List<WebElement> elementlerListesi){
+    //   HARD WAIT WITH THREAD.SLEEP
+//   waitFor(5);  => waits for 5 second
+    public static void waitFor(int sec) {
+        try {
+            Thread.sleep(sec * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
+    //===============Explicit Wait==============//
+    public static WebElement waitForVisibility(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public static WebElement waitForVisibility(By locator, int timeout) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public static WebElement waitForClickablility(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    public static WebElement waitForClickablility(By locator, int timeout) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    public static void clickWithTimeOut(WebElement element, int timeout) {
+        for (int i = 0; i < timeout; i++) {
+            try {
+                element.click();
+                return;
+            } catch (WebDriverException e) {
+                waitFor(1);
+            }
+        }
+    }
+
+    public static void waitForPageToLoad(long timeout) {
+        ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
+            }
+        };
+        try {
+            System.out.println("Waiting for page to load...");
+            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
+            wait.until(expectation);
+        } catch (Throwable error) {
+            System.out.println(
+                    "Timeout waiting for Page Load Request to complete after " + timeout + " seconds");
+        }
+    }
+
+    //========Hover Over=====//
+    public static void hover(WebElement element) {
+        Actions actions = new Actions(Driver.getDriver());
+        actions.moveToElement(element).perform();
+    }
+
+    //==========Return a list of string given a list of Web Element====////
+    public static List<String> stringListeDonustur(List<WebElement> elementlerListesi) {
         List<String> stringlerListesi = new ArrayList<>();
-
         for (WebElement each : elementlerListesi
-             ) {
-
+        ) {
             stringlerListesi.add(each.getText());
         }
-
         return stringlerListesi;
     }
 
-    public static void bekle(int saniye){
-
+    public static void bekle(int saniye) {
         try {
-            Thread.sleep(saniye*1000);
+            Thread.sleep(saniye * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void titleIleSayfaDegistir(String hedefSayfaTitle){
-
+    //========Switching Window=====//
+    public static void titleIleSayfaDegistir(String hedefSayfaTitle) {
         Set<String> tumWhdSeti = Driver.getDriver().getWindowHandles();
-
         for (String each : tumWhdSeti
-             ) {
-
+        ) {
             String eachTitle = Driver.getDriver().switchTo().window(each).getTitle();
-            if (eachTitle.equals(hedefSayfaTitle)){
+            if (eachTitle.equals(hedefSayfaTitle)) {
                 break;
             }
         }
-
     }
 
     public static String ilkSayfaWhdIleIkinciSayfaWhdBul(WebDriver driver, String ilkSayfaWhd) {
-
-        Set<String > tumWhdSeti = driver.getWindowHandles();
-
+        Set<String> tumWhdSeti = driver.getWindowHandles();
         tumWhdSeti.remove(ilkSayfaWhd);
-
-        for (String each:tumWhdSeti
-             ) {
+        for (String each : tumWhdSeti
+        ) {
             return each;
         }
-
         return null; // bu satirin hic calismayacagini biliyoruz
-                     // sadece javanin endiselerini gidermek icin yazdik
+        // sadece javanin endiselerini gidermek icin yazdik
     }
 
-    public static void tumSayfaTakeScreenshot(WebDriver driver){
+    public static void tumSayfaTakeScreenshot(WebDriver driver) {
         // tum sayfanin fotografini cekip kaydedin
-
         // 1.adim tss objesi olustur
-
         TakesScreenshot tss = (TakesScreenshot) driver;
-
         // 2.adim fotografi kaydedecegimiz dosya yolu ile bir File olusturalim
         //   her yeni kaydedilen resmin oncekinin ustune kaydedilmemesi icin
         //   kaydedilecek dosya yolunu dinamik yapabiliriz
         //   dinamik yapmak icin dosya yoluna tarih etiketi ekleyelim
-
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter istenenFormat = DateTimeFormatter.ofPattern("yyMMddHHmmss");
         String dinamikDosyaYolu = "target/screenshots/tumSayfaScreenshot" +
-                                    localDateTime.format(istenenFormat)+
-                                    ".jpg";
-
+                localDateTime.format(istenenFormat) +
+                ".jpg";
         File tumSayfaScreenshot = new File(dinamikDosyaYolu);
-
         // 3.adim tss objesini kullanarak fotografi cekip, gecici bir dosyaya kaydedelim
-
         File geciciDosya = tss.getScreenshotAs(OutputType.FILE);
-
         // 4.adim : gecici dosyayi, asil dosyaya kopyalayalim
-
         try {
-            FileUtils.copyFile(geciciDosya,tumSayfaScreenshot);
+            FileUtils.copyFile(geciciDosya, tumSayfaScreenshot);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         ReusableMethods.bekle(5);
     }
 
-    public static void tumSayfaTakeScreenshot(String testAdi,WebDriver driver){
+    public static void tumSayfaTakeScreenshot(String testAdi, WebDriver driver) {
         // tum sayfanin fotografini cekip kaydedin
-
         // 1.adim tss objesi olustur
-
         TakesScreenshot tss = (TakesScreenshot) driver;
-
         // 2.adim fotografi kaydedecegimiz dosya yolu ile bir File olusturalim
         //   her yeni kaydedilen resmin oncekinin ustune kaydedilmemesi icin
         //   kaydedilecek dosya yolunu dinamik yapabiliriz
         //   dinamik yapmak icin dosya yoluna tarih etiketi ekleyelim
-
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter istenenFormat = DateTimeFormatter.ofPattern("yyMMddHHmmss");
-        String dinamikDosyaYolu = "target/screenshots/"+
-                testAdi
-                +
-                localDateTime.format(istenenFormat)+
-                ".jpg";
-
+        String dinamikDosyaYolu = "target/screenshots/" +
+                testAdi + localDateTime.format(istenenFormat) + ".jpg";
         File tumSayfaScreenshot = new File(dinamikDosyaYolu);
-
         // 3.adim tss objesini kullanarak fotografi cekip, gecici bir dosyaya kaydedelim
-
         File geciciDosya = tss.getScreenshotAs(OutputType.FILE);
-
         // 4.adim : gecici dosyayi, asil dosyaya kopyalayalim
-
         try {
-            FileUtils.copyFile(geciciDosya,tumSayfaScreenshot);
+            FileUtils.copyFile(geciciDosya, tumSayfaScreenshot);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         ReusableMethods.bekle(5);
     }
 
-    public static void istenenWebelementScreenshot(WebElement istenenWebelement){
-
+    public static void istenenWebelementScreenshot(WebElement istenenWebelement) {
         // 1.adim screenshot alacagimiz webelementi locate et
-
         // 2.adim scrennshot'i kaydedecegimiz file'i olusturalim
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter istenenFormat = DateTimeFormatter.ofPattern("yyMMddHHmmss");
         String dinamikDosyaYolu = "target/screenshots/istenenWebelementScreenshot" +
-                localDateTime.format(istenenFormat)+
-                ".jpg";
-
-
+                localDateTime.format(istenenFormat) + ".jpg";
         File istenenWebelementScreenshot = new File(dinamikDosyaYolu);
-
         // 3.adim webelement uzerinden screenshot'i alip gecici bir dosyaya kaydedin
-
         File geciciDosya = istenenWebelement.getScreenshotAs(OutputType.FILE);
-
         // 4.adim gecici dosyayi asil dosyaya kopyalayalim
-
         try {
-            FileUtils.copyFile(geciciDosya,istenenWebelementScreenshot);
+            FileUtils.copyFile(geciciDosya, istenenWebelementScreenshot);
         } catch (IOException e) {
             System.out.println("Screenshot kopyalanamadi");
             throw new RuntimeException(e);
         }
-
-
     }
 
     public static String getScreenshot(String name) throws IOException {

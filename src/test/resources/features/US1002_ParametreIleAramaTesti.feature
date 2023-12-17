@@ -7,7 +7,7 @@ Feature: US1002 Kullanici parametre ile verdigi urunu aratabilmeli
     And arama sonucunda urun bulunamadigini test eder
     And 3 saniye bekler
     Then sayfayi kapatir
-
+  @Smoke
   Scenario: TC05 Kullanici samsung arattiginda sonuc bulamamali
 
     Given kullanici "toUrl" anasayfaya gider

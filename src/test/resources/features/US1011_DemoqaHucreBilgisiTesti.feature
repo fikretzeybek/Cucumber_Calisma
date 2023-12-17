@@ -1,6 +1,6 @@
-Feature: US1011_Demo Guru Web Table
+Feature: US1011_DemoGuru WebTable hucre bilgisini yazdirabilmeli
 
-  @wip
+
   Scenario: Kullanici istedigi satir ve sutundaki bilgiyi yazdirir
 
     Given kullanici "Demo_Guru_Url" anasayfaya gider
