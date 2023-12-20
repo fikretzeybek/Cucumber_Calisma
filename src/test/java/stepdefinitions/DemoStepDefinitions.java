@@ -4,7 +4,7 @@ import io.cucumber.java.en.Given;
 import pages.DemoqaPage;
 import utilities.ConfigReader;
 
-public class DemoqaStepDefinitions {
+public class DemoStepDefinitions {
 
     DemoqaPage demoqaPage=new DemoqaPage();
 

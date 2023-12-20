@@ -2,9 +2,14 @@ package stepdefinitions;
 
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import pages.BestBuyPage;
 import utilities.ConfigReader;
+import utilities.Driver;
 import utilities.ReusableMethods;
 
 import java.util.List;
@@ -35,37 +40,44 @@ public class BestBuyStepdefinitions {
         ReusableMethods.bekle(1);
         bestBuyPage.shopAllElementi.click();
         ReusableMethods.bekle(2);
-        bestBuyPage.pcElementi.click();
+
     }
 
     /*
 
 
      */
-    @Then("The user verifies that the number of cells in the table is {string}")
-    public void the_user_verifies_that_the_number_of_cells_in_the_table_is(String cellSayisi) {
-       /* ReusableMethods.bekle(3);
-        List<String> kategoriElementleriList = ReusableMethods.stringListeDonustur(bestBuyPage.categoryElementleri);
+    @Then("The user verifies that the number of cells in the table is {int}")
+    public void the_user_verifies_that_the_number_of_cells_in_the_table_is(int cellSayisi) {
+       ReusableMethods.bekle(3);
+        List<String> kategoriElementleriList = ReusableMethods.stringListeDonustur(bestBuyPage.pElementi);
         int actualCellDataSayisi = kategoriElementleriList.size();
-        int expectedCellDataSayisi = Integer.parseInt(ConfigReader.getProperty(cellSayisi));
+        int expectedCellDataSayisi = 12;
         Assert.assertEquals(expectedCellDataSayisi, actualCellDataSayisi);
 
-        */
+
     }
 
     @Then("the user scroll to bottom of page")
     public void the_user_scroll_to_bottom_of_page() {
-
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) Driver.getDriver();
+        jsExecutor.executeScript("window.scrollTo(0, document.body.scrollHeight);");
     }
 
     @Then("The user enter a valid mail in mail box and clicks signup button")
     public void the_user_enter_a_valid_mail_in_mail_box_and_clicks_signup_button() {
+        Actions actions = new Actions(Driver.getDriver());
+        actions.click(bestBuyPage.emailKutusu)
+                .sendKeys("ali@ali.com")
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.ENTER)
+                .perform();
 
     }
 
     @Then("the user closes the page")
     public void the_user_closes_the_page() {
-
+        Driver.quitDriver();
     }
 
 

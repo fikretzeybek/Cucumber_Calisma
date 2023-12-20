@@ -27,8 +27,10 @@ public class BestBuyPage {
     @FindBy(partialLinkText = "Accessories")
     public WebElement compTabAccWebelementi;
 
-    @FindBy(xpath = "(//*[@class='col-xs-4_1EA1G col-sm-2_ZxGIs category_LRby8'])[1]")
-    public WebElement pcElementi;
+    @FindBy(xpath = "//*[@class='col-xs-4_1EA1G col-sm-2_ZxGIs category_LRby8']")
+    public List<WebElement> pElementi;
+    @FindBy(xpath = "//*[@data-automation='email-address-input']")
+    public WebElement emailKutusu;
 
 
 
@@ -36,7 +38,7 @@ public class BestBuyPage {
     @FindBy(partialLinkText = "MacBooks")
     public WebElement macBookWebelementi;
 
- @FindBy(className = "col-xs-4_1EA1G col-sm-2_ZxGIs category_LRby8")
+  @FindBy(className = "col-xs-4_1EA1G col-sm-2_ZxGIs category_LRby8")
     public List<WebElement> categoryElementleri;
 
 
