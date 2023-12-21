@@ -2,16 +2,19 @@ package stepdefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import pages.WebUniPage;
+import utilities.Driver;
 
 public class WebdriverUniversityStepdefinitions {
+    WebUniPage page = new WebUniPage();
 
     @Given("ourProduct linkine tiklamak icin iFrame'e gecis yapar")
     public void our_product_linkine_tiklamak_icin_i_frame_e_gecis_yapar() {
-
+        Driver.getDriver().switchTo().frame(page.iFrameElementi);
     }
     @Given("Our Products butonuna basar")
     public void our_products_butonuna_basar() {
-
+        page.ourProductLinki.click();
     }
     @Then("acilan sayfada Cameras'i tiklar")
     public void acilan_sayfada_cameras_i_tiklar() {
