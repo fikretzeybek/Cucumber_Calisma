@@ -42,26 +42,7 @@ public class TestOtomasyonuPage {
 
 
 
-    @FindBy(xpath = "//input[@id='password']")
-    public WebElement signInPasswordKutusu;
 
-    @FindBy(xpath = "//*[@id='submitlogin']")
-    public WebElement signInFormuSubmitButonu;
-
-    @FindBy(xpath = "//span[text()='Logout']")
-    public WebElement logoutButonu;
-
-    @FindBy(xpath = "(//div[@class='product-box mb-2 pb-1'])[1]")
-    public WebElement ilkUrunElementi;
-
-    @FindBy(xpath = "//div[@class=' heading-sm mb-4']")
-    public WebElement seciliUrunIsimElementi;
-
-    @FindBy(xpath = "//button[@class='add-to-cart']")
-    public WebElement addToCartButonu;
-
-    @FindBy(xpath = "(//span[text()='Your Cart'])[1]")
-    public WebElement yourCartLinki;
 
     @FindBy(xpath = "//*[@*='product-title text-center']")
     public WebElement sepettekiUrunIsimElementi;
