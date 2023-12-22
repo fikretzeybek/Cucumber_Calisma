@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Cucumber" time="17.029" tests="1" skipped="0" failures="0" errors="0">
-<testcase classname="US1014 Kullanici iFrame'e gecis yapabilmeli" name="TC17 iFrame otomasyon testi" time="16.221">
+<testsuite name="Cucumber" time="14.467" tests="1" skipped="0" failures="1" errors="0">
+<testcase classname="" name="" time="13.456">
+<failure type="java.lang.NullPointerException">
+<![CDATA[java.lang.NullPointerException
+	at stepdefinitions.UseinsiderStepdefinitions.kullanici_cookies_kabul_eder(UseinsiderStepdefinitions.java:12)
+	at ✽.kullanici cookies kabul eder(file:///E:/IdeaProjects/Calisma_CUCUMBER/src/test/resources/features/US1012_UseinsiderTesti.feature:6)
+]]>
+</failure>
 <system-out><![CDATA[
-Given kullanici "webUniFrameUrl" anasayfaya gider...........................passed
-And ourProduct linkine tiklamak icin iFrame'e gecis yapar...................passed
-And Our Products butonuna basar.............................................passed
-Then acilan sayfada Cameras'i tiklar........................................passed
-And 1 saniye bekler.........................................................passed
-And Popup mesajini yazdirir.................................................passed
-And close butonuna basar....................................................passed
-Then iFrame'den cikis yapar.................................................passed
-And WebdriverUniversity.com (IFrame) linkini tiklar.........................passed
-And acilan sayfa url'inin "https://webdriveruniversity.com/index.html" oldugunu test eder.passed
-And sayfayi kapatir.........................................................passed
+Given kullanici "useinsider" anasayfaya gider...............................passed
+Then kullanici cookies kabul eder...........................................failed
+And Campany butonuna tiklar.................................................skipped
+And Careers secer...........................................................skipped
 ]]></system-out>
 </testcase>
 </testsuite>

@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Calisma_CUCUMBER" />
+        <module name="Team127_Cucumber" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Calisma_CUCUMBER" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -40,9 +40,8 @@ public class WebdriverUniversityStepdefinitions {
     page.webDriverLinki.click();
     }
     @Then("acilan sayfa url'inin {string} oldugunu test eder")
-    public void acilan_sayfa_url_inin_oldugunu_test_eder(String string) {
-    String expectedUrl = string;
-    String actualUrl = Driver.getDriver().getCurrentUrl();
+    public void acilan_sayfa_url_inin_oldugunu_test_eder(String expectedUrl) {
+        String actualUrl = Driver.getDriver().getCurrentUrl();
         Assert.assertEquals(expectedUrl,actualUrl);
 
     }
