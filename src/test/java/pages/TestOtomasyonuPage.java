@@ -40,27 +40,7 @@ public class TestOtomasyonuPage {
     @FindBy(xpath = "//span[text()='Logout']")
     public WebElement logoutLinki;
 
-    @FindBy(xpath = "(//li[@class='has-sub'])[1]")
-    public WebElement electronicsLinki;
 
-    @FindBy(xpath = "//li[@class='acc_head']")
-    public List<WebElement> kategoriElementList;
-
-
-    @FindBy(xpath = "//div[@class='product-box my-2  py-1']")
-    public List<WebElement> bulunanUrunlerListesi;
-
-    @FindBy(xpath = "//a[text()=' Sign Up']")
-    public WebElement signUpLinki;
-
-    @FindBy(id="firstName")
-    public WebElement signUpFirstnameKutusu;
-
-    @FindBy(id = "btn-submit-form")
-    public WebElement signUpFormuSubmit;
-
-    @FindBy(xpath = "//input[@id='email']")
-    public WebElement signInEmailKutusu;
 
     @FindBy(xpath = "//input[@id='password']")
     public WebElement signInPasswordKutusu;
