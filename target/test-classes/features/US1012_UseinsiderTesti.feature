@@ -1,6 +1,6 @@
 Feature:
 
-@wip
+@
   Scenario:
     Given kullanici "useinsider" anasayfaya gider
     Then kullanici cookies kabul eder

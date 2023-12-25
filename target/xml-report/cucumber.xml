@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Cucumber" time="14.467" tests="1" skipped="0" failures="1" errors="0">
-<testcase classname="" name="" time="13.456">
-<failure type="java.lang.NullPointerException">
-<![CDATA[java.lang.NullPointerException
-	at stepdefinitions.UseinsiderStepdefinitions.kullanici_cookies_kabul_eder(UseinsiderStepdefinitions.java:12)
-	at ✽.kullanici cookies kabul eder(file:///E:/IdeaProjects/Calisma_CUCUMBER/src/test/resources/features/US1012_UseinsiderTesti.feature:6)
-]]>
-</failure>
+<testsuite name="Cucumber" time="18.173" tests="2" skipped="0" failures="0" errors="0">
+<testcase classname="US1015 Kullanici amazon anasayfada arama yapar" name="TC18 Kullanici amazonda Nutella aratir" time="11.042">
 <system-out><![CDATA[
-Given kullanici "useinsider" anasayfaya gider...............................passed
-Then kullanici cookies kabul eder...........................................failed
-And Campany butonuna tiklar.................................................skipped
-And Careers secer...........................................................skipped
+Given kullanici "amazonUrl" anasayfaya gider................................passed
+And arama kutusuna Nutella yazip aratir.....................................passed
+Then arama sonuclarinin Nutella icerdigini test eder........................passed
+]]></system-out>
+</testcase>
+<testcase classname="US1015 Kullanici amazon anasayfada arama yapar" name="TC19 Kullanici amazonda Java aratir" time="6.384">
+<system-out><![CDATA[
+Given kullanici "amazonUrl" anasayfaya gider................................passed
+And arama kutusuna Java yazip aratir........................................passed
+Then arama sonuclarinin Java icerdigini test eder...........................passed
+And 2 saniye bekler.........................................................passed
+And sayfayi kapatir.........................................................passed
 ]]></system-out>
 </testcase>
 </testsuite>
